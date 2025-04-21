@@ -1,8 +1,24 @@
 import { filters } from "../constants"
+import React from "react";
+import { FilterPagination } from "../models/filterPagination";
 
-export default function SideBar({ onChangeState }: any) {
+export default function SideBar({ setFilter }: any) {
     const handleInputChange = (event: any) => {
-        onChangeState({ input: event.target.name, value: Number(event.target.value) })
+        let key = event.target.name === 'brands' ? 'brand' : 'status';
+        let filter = filters[event.target.name as keyof typeof filters].find(o => o.id === Number(event.target.value));
+        let value = null;
+
+        if (event.target.name === 'brands') {
+            value = Number(event.target.value) === 0 ? '' : filter?.name;
+        } else {
+            value = Number(event.target.value) === 0 ? [] : [filter?.name];
+        }
+
+        setFilter((o: FilterPagination) => ({
+            ...o,
+            paging: { page: 0, size: 20 },
+            filters: { ...o.filters, [key]: value }
+        }))
     }
 
     return (

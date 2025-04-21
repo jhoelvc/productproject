@@ -10,7 +10,7 @@ const columns = [
 
 ]
 
-export default function Table({ data }: any) {
+export default function Table({ data, setFilter }: any) {
 	return (
 		<div className="table-responsive">
 			<table className="table table-striped table-hover">
@@ -22,7 +22,7 @@ export default function Table({ data }: any) {
 					</tr>
 				</thead>
 				<tbody>
-					{data.products?.map((item: any) => (
+					{data?.products?.map((item: any) => (
 						<tr key={item.productId}>
 							<td>{item.name}</td>
 							<td>{item.storeName}</td>
@@ -35,7 +35,7 @@ export default function Table({ data }: any) {
 				</tbody>
 			</table>
 
-			<Pagination pagination={data.paging}></Pagination>
+			<Pagination pagination={data?.paging} setFilter={setFilter}></Pagination>
 		</div>
 	)
 }
